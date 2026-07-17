@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeonCraft • سرور ماینکرفت</title>
+    
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background: radial-gradient(circle at 20% 20%, #1e1e2f, #0b0b15);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float linear infinite;
+            bottom: -150px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
+        }
+
+        .main-card {
+            position: relative;
+            z-index: 10;
+            background: rgba(20, 20, 35, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .main-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: -15px;
+            background: radial-gradient(circle, rgba(255,71,87,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .logo-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .logo-img:hover {
+            border-color: #ff4757;
+            box-shadow: 0 10px 40px rgba(255,71,87,0.4);
+        }
+
+        .title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff4757, #ff6b81, #ff8c9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255,71,87,0.3);
+        }
+
+        .subtitle {
+            color: #b2bec3;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .btn {
+            padding: 16px 28px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-rank {
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255,71,87,0.4);
+        }
+
+        .btn-rank:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255,71,87,0.6);
+        }
+
+        .btn-server {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            color: #2ed573;
+            border: 1.5px solid #2ed573;
+            box-shadow: 0 8px 25px rgba(46, 213, 115, 0.15);
+        }
+
+        .btn-server:hover {
+            background: rgba(46, 213, 115, 0.1);
+            border-color: #7bed9f;
+            color: #7bed9f;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(46, 213, 115, 0.3);
+        }
+
+        /* باکس آیپی */
+        .server-ip-box {
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #dfe6e9;
+            font-weight: 500;
+            font-size: 0.95rem;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .server-ip-box:hover {
+            background: rgba(46, 213, 115, 0.1);
+            border-color: #2ed573;
+            color: #2ed573;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 213, 115, 0.3);
+        }
+
+        .server-ip-box i {
+            font-size: 1.1rem;
+            color: #2ed573;
+        }
+
+        /* نوتیفیکیشن */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(20, 20, 35, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 50px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s;
+            pointer-events: none;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            white-space: normal;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* مودال */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 45, 0.8);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: modalPop 0.3s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff4757;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #ff4757;
+            transform: rotate(90deg);
+        }
+
+        .category-title {
+            color: #ff6b81;
+            font-weight: 700;
+            margin: 1.2rem 0 0.8rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.4rem;
+        }
+
+        .rank-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 12px 18px;
+            margin: 8px 0;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .rank-item:hover {
+            background: rgba(255,71,87,0.15);
+            border-color: rgba(255,71,87,0.4);
+            transform: translateX(-5px);
+        }
+
+        .rank-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rank-price {
+            background: #ff4757;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255,71,87,0.3);
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #ff4757;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .main-card {
+                padding: 2rem 1.5rem;
+                border-radius: 30px;
+            }
+            .title {
+                font-size: 2.2rem;
+            }
+            .logo-img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+
+    <!-- نوتیفیکیشن -->
+    <div id="toast" class="toast">
+        <i id="toastIcon" class="fas fa-info-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <div class="main-card">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <img src="https://cdn.imgurl.ir/uploads/k154291_IMG_20260715_145446_631.jpg" alt="LeonCraft Logo" class="logo-img">
+        </div>
+
+        <h1 class="title">LeonCraft</h1>
+        <p class="subtitle">
+            <i class="fas fa-crown" style="color: #ff4757; margin-left: 5px;"></i>
+            بهترین سرور ایرانی با قیمت‌های استثنایی رنک
+        </p>
+
+        <div class="btn-group">
+            <button class="btn btn-rank" onclick="openModal()">
+                <i class="fas fa-shopping-cart"></i> خرید رنک
+            </button>
+            <button class="btn btn-server" onclick="connectToServer()">
+                <i class="fas fa-play"></i> ورود به سرور
+            </button>
+        </div>
+
+        <!-- باکس آیپی (قابل کلیک) -->
+        <div class="server-ip-box" onclick="copyServerIP()">
+            <i class="fas fa-copy"></i>
+            <span>play.leoncraft.ir</span>
+        </div>
+    </div>
+
+    <!-- مودال خرید رنک -->
+    <div id="rankModal" class="modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <span><i class="fas fa-star"></i> لیست رنک‌ها</span>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+
+            <div class="category-title"><i class="far fa-clock"></i> رنک‌های یک هفته‌ای</div>
+            
+            <div class="rank-item" onclick="buy('𝒱𝒾𝓅', '10T')">
+                <span class="rank-name"><i class="fas fa-gem" style="color: #a29bfe;"></i> 𝒱𝒾𝓅</span>
+                <span class="rank-price">10T</span>
+            </div>
+            <div class="rank-item" onclick="buy('ℳ𝓋𝓅', '15T')">
+                <span class="rank-name"><i class="fas fa-star" style="color: #fdcb6e;"></i> ℳ𝓋𝓅</span>
+                <span class="rank-price">15T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Knight', '25T')">
+                <span class="rank-name"><i class="fas fa-shield-alt" style="color: #74b9ff;"></i> Knight</span>
+                <span class="rank-price">25T</span>
+            </div>
+            <div class="rank-item" onclick="buy('King', '30T')">
+                <span class="rank-name"><i class="fas fa-crown" style="color: #f1c40f;"></i> King</span>
+                <span class="rank-price">30T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Supreme', '35T')">
+                <span class="rank-name"><i class="fas fa-fire" style="color: #e17055;"></i> Supreme</span>
+                <span class="rank-price">35T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Leon', '40T')">
+                <span class="rank-name"><i class="fas fa-paw" style="color: #ff4757;"></i> Leon</span>
+                <span class="rank-price">40T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Leon-Star', '50T')">
+                <span class="rank-name"><i class="fas fa-meteor" style="color: #ffeaa7;"></i> Leon-Star</span>
+                <span class="rank-price">50T</span>
+            </div>
+
+            <div class="category-title"><i class="far fa-calendar-check"></i> رنک‌های یک ماهه</div>
+            
+            <div class="rank-item" onclick="buy('𝒱𝒾𝓅', '35T')">
+                <span class="rank-name"><i class="fas fa-gem" style="color: #a29bfe;"></i> 𝒱𝒾𝓅</span>
+                <span class="rank-price">35T</span>
+            </div>
+            <div class="rank-item" onclick="buy('ℳ𝓋𝓅', '50T')">
+                <span class="rank-name"><i class="fas fa-star" style="color: #fdcb6e;"></i> ℳ𝓋𝓅</span>
+                <span class="rank-price">50T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Knight', '100T')">
+                <span class="rank-name"><i class="fas fa-shield-alt" style="color: #74b9ff;"></i> Knight</span>
+                <span class="rank-price">100T</span>
+            </div>
+            <div class="rank-item" onclick="buy('King', '125T')">
+                <span class="rank-name"><i class="fas fa-crown" style="color: #f1c40f;"></i> King</span>
+                <span class="rank-price">125T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Supreme', '145T')">
+                <span class="rank-name"><i class="fas fa-fire" style="color: #e17055;"></i> Supreme</span>
+                <span class="rank-price">145T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Leon', '165T')">
+                <span class="rank-name"><i class="fas fa-paw" style="color: #ff4757;"></i> Leon</span>
+                <span class="rank-price">165T</span>
+            </div>
+            <div class="rank-item" onclick="buy('Leon-Star', '205T')">
+                <span class="rank-name"><i class="fas fa-meteor" style="color: #ffeaa7;"></i> Leon-Star</span>
+                <span class="rank-price">205T</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⚙️ مشخصات سرور جاوا (بدون پورت)
+        const SERVER_NAME = "LeonCraft";
+        const SERVER_IP = "play.leoncraft.ir";
+
+        // لینک مستقیم ماینکرفت (بدون پورت)
+        const MINECRAFT_LINK = `minecraft://?addExternalServer=${SERVER_NAME}|${SERVER_IP}`;
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 80 + 20;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toastIcon');
+            const msgSpan = document.getElementById('toastMessage');
+            
+            msgSpan.textContent = message;
+            
+            switch(type) {
+                case 'success':
+                    icon.className = 'fas fa-check-circle';
+                    icon.style.color = '#2ed573';
+                    break;
+                case 'warning':
+                    icon.className = 'fas fa-exclamation-triangle';
+                    icon.style.color = '#ffa502';
+                    break;
+                case 'info':
+                default:
+                    icon.className = 'fas fa-info-circle';
+                    icon.style.color = '#ff6b81';
+            }
+            
+            toast.classList.add('show');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function copyServerIP() {
+            navigator.clipboard.writeText(SERVER_IP).then(() => {
+                showToast(`✅ آی‌پی سرور کپی شد: ${SERVER_IP}`, 'success');
+            }).catch(() => {
+                showToast('❌ خطا در کپی کردن. لطفاً دستی وارد کنید.', 'warning');
+            });
+        }
+
+        function connectToServer() {
+            // ۱. همیشه اول آی‌پی را کپی می‌کنیم تا کاربر خیالش راحت باشد
+            copyServerIP();
+
+            // ۲. تلاش برای باز کردن لینک ماینکرفت
+            const startTime = Date.now();
+            
+            // ایجاد یک لینک مخفی و کلیک خودکار (سازگاری بهتر در موبایل)
+            const link = document.createElement('a');
+            link.href = MINECRAFT_LINK;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // ۳. اگر بعد از ۲.۵ ثانیه همچنان در صفحه بودیم (یعنی برنامه باز نشد)
+            setTimeout(() => {
+                // بررسی می‌کنیم آیا کاربر از صفحه رفته یا نه (با فرض اینکه اگر بره، تایمر پاک می‌شود)
+                // یک راه ساده: اگر اختلاف زمانی کمتر از ۲.۵ ثانیه نگذشته باشد، یعنی برگشته
+                if (Date.now() - startTime > 2000) {
+                    showToast(`📋 آدرس سرور: ${SERVER_IP} (از قبل کپی شد). می‌توانید دستی وارد کنید.`, 'info');
+                }
+            }, 2500);
+        }
+
+        function openModal() {
+            document.getElementById('rankModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('rankModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function buy(rankName, price) {
+            closeModal();
+            const message = `🛒 برای خرید رنک ${rankName} (${price}) به آیدی روبیکا @Ah_Brack پیام دهید.`;
+            showToast(message, 'info');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('rankModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>
